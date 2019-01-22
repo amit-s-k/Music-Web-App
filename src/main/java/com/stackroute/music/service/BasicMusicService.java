@@ -38,4 +38,8 @@ public class BasicMusicService implements AbstractMusicService {
         log.info("Searching repository for track");
         return musicRepository.findById(id);
     }
+    public Music findByTrackName(String trackName){
+        log.info("Searching repository for trackname {}",trackName);
+        return musicRepository.findByTrackComments(trackName);
+    }
 }

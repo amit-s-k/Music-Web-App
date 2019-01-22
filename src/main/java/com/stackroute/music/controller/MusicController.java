@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping(value = "/api/v2/")
 public class MusicController {
     private BasicMusicService basicMusicService;
 
@@ -76,6 +77,19 @@ public class MusicController {
 
         } catch (Exception e) {
             responseEntity = new ResponseEntity<>(music, HttpStatus.BAD_REQUEST);
+        }
+        return responseEntity;
+    }
+
+    @GetMapping(value = "/findbyname/{trackname}")
+    public ResponseEntity<Music> findByTrackName(@PathVariable String trackname) {
+        ResponseEntity<Music> responseEntity;
+        try {
+            responseEntity = new ResponseEntity<>(basicMusicService.findByTrackName(trackname), HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseEntity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }

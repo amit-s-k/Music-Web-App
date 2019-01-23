@@ -31,7 +31,7 @@ public class BasicMusicService implements AbstractMusicService {
 
     public void deleteTrackById(int id) {
         log.info("Deleting track ");
-        musicRepository.deleteById(id);
+        musicRepository.delete(musicRepository.findById(id).get());
     }
 
     public Optional<Music> findTrackById(int id) {
@@ -39,8 +39,8 @@ public class BasicMusicService implements AbstractMusicService {
         return musicRepository.findById(id);
     }
 
-    public Music findByTrackName(String trackName) {
-        log.info("Searching repository for trackname {}", trackName);
-        return musicRepository.findByTrackComments(trackName);
-    }
+//    public Music findByTrackName(String trackName) {
+//        log.info("Searching repository for trackname {}", trackName);
+//        return musicRepository.findByTrackComments(trackName);
+//    }
 }

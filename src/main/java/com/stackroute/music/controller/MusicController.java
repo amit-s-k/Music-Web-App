@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(value = "/api/v2/")
 public class MusicController {
     private BasicMusicService basicMusicService;
 
@@ -39,11 +38,11 @@ public class MusicController {
         return responseEntity;
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<String> deleteTrackById(@PathVariable int id) {
-        ResponseEntity<String> responseEntity;
+    @DeleteMapping(value = "/delete/{track_id}")
+    public ResponseEntity<String> deleteTrackById(@PathVariable int track_id) {
+        ResponseEntity responseEntity;
         try {
-            basicMusicService.deleteTrackById(id);
+            basicMusicService.deleteTrackById(track_id);
             responseEntity = new ResponseEntity<>("Track Deleted Sucessfully", HttpStatus.OK);
         } catch (Exception e) {
             responseEntity = new ResponseEntity<>("Error Occured While Deleting Track", HttpStatus.BAD_REQUEST);
@@ -81,16 +80,16 @@ public class MusicController {
         return responseEntity;
     }
 
-    @GetMapping(value = "/findbyname/{trackname}")
-    public ResponseEntity<Music> findByTrackName(@PathVariable String trackname) {
-        ResponseEntity<Music> responseEntity;
-        try {
-            responseEntity = new ResponseEntity<>(basicMusicService.findByTrackName(trackname), HttpStatus.OK);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            responseEntity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-        return responseEntity;
-    }
+//    @GetMapping(value = "/findbyname/{trackname}")
+//    public ResponseEntity<Music> findByTrackName(@PathVariable String trackname) {
+//        ResponseEntity<Music> responseEntity;
+//        try {
+//            responseEntity = new ResponseEntity<>(basicMusicService.findByTrackName(trackname), HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            responseEntity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+//        }
+//        return responseEntity;
+//    }
 }

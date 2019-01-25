@@ -31,7 +31,7 @@ public class BasicMusicService implements AbstractMusicService {
 
     public void deleteTrackById(int id) {
         log.info("Deleting track ");
-        musicRepository.delete(musicRepository.findById(id).get());
+        musicRepository.deleteById(id);
     }
 
     public Optional<Music> findTrackById(int id) {

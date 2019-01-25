@@ -5,19 +5,20 @@ import com.stackroute.music.service.BasicMusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class MusicController {
     private BasicMusicService basicMusicService;
 
     @Autowired
     public MusicController(BasicMusicService basicMusicService) {
         this.basicMusicService = basicMusicService;
+        System.out.println("ggg");
+
     }
 
     @GetMapping(value = "/findalltracks")
@@ -38,13 +39,15 @@ public class MusicController {
         return responseEntity;
     }
 
-    @DeleteMapping(value = "/delete/{track_id}")
-    public ResponseEntity<String> deleteTrackById(@PathVariable int track_id) {
-        ResponseEntity responseEntity;
+    @DeleteMapping("/delete/{track_id}")
+    public ResponseEntity<?> deleteTrackById(@PathVariable int track_id) {
+        ResponseEntity<?> responseEntity;
         try {
             basicMusicService.deleteTrackById(track_id);
+
             responseEntity = new ResponseEntity<>("Track Deleted Sucessfully", HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             responseEntity = new ResponseEntity<>("Error Occured While Deleting Track", HttpStatus.BAD_REQUEST);
         }
         return responseEntity;

@@ -3,6 +3,7 @@ package com.stackroute.music.controller;
 import com.stackroute.music.model.Music;
 import com.stackroute.music.service.BasicMusicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +12,23 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/music")
 public class MusicController {
     private BasicMusicService basicMusicService;
+    @Value("${user.name}")
+    String val;
 
     @Autowired
     public MusicController(BasicMusicService basicMusicService) {
         this.basicMusicService = basicMusicService;
         System.out.println("ggg");
 
+    }
+
+    @GetMapping(value = "/config")
+    public String demo() {
+        System.out.println("bbb " + val);
+        return val;
     }
 
     @GetMapping(value = "/findalltracks")

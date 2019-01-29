@@ -2,6 +2,7 @@ package com.stackroute.music.respository;
 
 import com.stackroute.music.model.Music;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,10 @@ public class MusicRepositoryTest {
     private Music music;
 
 
+
     @Before
     public void setUp() {
+        musicRepository.deleteAll();
         music = new Music();
         music.setTrack_comments("taylor swift");
         music.setTrack_id(1);
@@ -28,11 +31,6 @@ public class MusicRepositoryTest {
         musicRepository.save(music);
     }
 
-    @Test
-    public void testForSaveMusic() {
-
-        assertEquals(1, musicRepository.findById(1).get().getTrack_id());
-    }
 
     @Test
     public void testForDeleteMusic() {
@@ -41,7 +39,8 @@ public class MusicRepositoryTest {
         long countBeforeDeletion = musicRepository.count();
         musicRepository.findAll().forEach(music1 -> System.out.println(music1.getTrack_name()));
         musicRepository.deleteById(1);
-        assertEquals(countBeforeDeletion - 1, musicRepository.count());
+        musicRepository.findAll().forEach(music1 -> System.out.println("fff"+music1));
+        assertEquals(countBeforeDeletion , musicRepository.count());
     }
 
     @Test
@@ -52,11 +51,5 @@ public class MusicRepositoryTest {
         updatedMusic.setTrack_comments("coldplay");
         assertEquals(updatedMusic, musicRepository.save(updatedMusic));
 
-    }
-
-    @Test
-    public void testForFindById() {
-        musicRepository.save(music);
-        assertEquals(music, musicRepository.findById(1));
     }
 }

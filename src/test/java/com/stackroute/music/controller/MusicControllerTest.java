@@ -59,7 +59,7 @@ public class MusicControllerTest {
     public void getAllTracks() throws Exception {
         List<Music> musicList = Collections.singletonList(music);
         when(basicMusicService.getAllTracks()).thenReturn(musicList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/findalltracks").contentType(MediaType.APPLICATION_JSON).content("some"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/music/findalltracks").contentType(MediaType.APPLICATION_JSON).content("some"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -67,14 +67,14 @@ public class MusicControllerTest {
     @Test
     public void addNewTrack() throws Exception {
         when(basicMusicService.addOrUpdateTrack(music)).thenReturn(music);
-        mockMvc.perform(MockMvcRequestBuilders.post("/addtrack").contentType(MediaType.APPLICATION_JSON).content(asJsonString(music)))
+        mockMvc.perform(MockMvcRequestBuilders.post("/music/addtrack").contentType(MediaType.APPLICATION_JSON).content(asJsonString(music)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     public void deleteTrackById() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/delete/1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(music)))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/music/delete/1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(music)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
         verify(basicMusicService, times(1)).deleteTrackById(1);
@@ -87,7 +87,7 @@ public class MusicControllerTest {
         updatedMusic.setTrack_name("def");
         updatedMusic.setTrack_comments("sdf");
         when(basicMusicService.addOrUpdateTrack(updatedMusic)).thenReturn(updatedMusic);
-        mockMvc.perform(MockMvcRequestBuilders.put("/update").contentType(MediaType.APPLICATION_JSON).content(asJsonString(updatedMusic)))
+        mockMvc.perform(MockMvcRequestBuilders.put("/music/update").contentType(MediaType.APPLICATION_JSON).content(asJsonString(updatedMusic)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
@@ -97,7 +97,7 @@ public class MusicControllerTest {
     @Test
     public void findTrackById() throws Exception {
         when(basicMusicService.findTrackById(1)).thenReturn(Optional.of(music));
-        mockMvc.perform(MockMvcRequestBuilders.get("/find/1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(music)))
+        mockMvc.perform(MockMvcRequestBuilders.get("/music/find/1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(music)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
